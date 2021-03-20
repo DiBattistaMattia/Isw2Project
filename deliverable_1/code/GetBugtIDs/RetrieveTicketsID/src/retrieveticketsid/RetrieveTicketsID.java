@@ -71,7 +71,29 @@ public class RetrieveTicketsID {
 		    
 		}
 	  
-	  	@SuppressWarnings("null")
+	   	public static void iterateOnBug(Integer i, Integer total, Integer j, JSONArray issues) {
+	   		
+	  		Logger logger = null;
+
+	   		for (; i < total && i < j; i++) {
+	            //Iterate through each bug
+	            try {
+					
+					logger.log((LogRecord) issues.getJSONObject(i%1000).get(fields));
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+	            try {
+					writeJsonFile(issues.getJSONObject(i%1000));
+				} catch (JSONException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+	          }
+	   		
+	   	}
+	   	
 		public static void main(String[] args){
 	  		   
 	  		items = new ArrayList<>();
@@ -83,8 +105,7 @@ public class RetrieveTicketsID {
 	  		JSONObject json = null;
 	  		String url = null;
 	  		JSONArray issues = null;
-	  		Logger logger = null;
-	  		
+
 	  		//Get JSON API for closed bugs w/ AV in the project
 	  		do {
 		         //Only gets a max of 1000 at a time, so must do this multiple times if bugs >1000
@@ -113,23 +134,8 @@ public class RetrieveTicketsID {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-		         
-		         for (; i < total && i < j; i++) {
-		            //Iterate through each bug
-		            try {
-						
-						logger.log((LogRecord) issues.getJSONObject(i%1000).get(fields));
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-		            try {
-						writeJsonFile(issues.getJSONObject(i%1000));
-					} catch (JSONException e) {
-						e.printStackTrace();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-		          }  
+		          
+		         iterateOnBug(i, total, j, issues); 
 	      
 	  		}while (i < total);
 	      
