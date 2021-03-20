@@ -66,7 +66,7 @@ public class RetrieveTicketsID {
 		}
 	  
 	  	@SuppressWarnings("null")
-		public static void main(String[] args){
+		public static void main(){
 	  		   
 	  		items = new ArrayList<>();
 	  		mainNode = new JSONObject();
@@ -88,10 +88,8 @@ public class RetrieveTicketsID {
 				try {
 					json = readJsonFromUrl(url);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 	
@@ -99,13 +97,11 @@ public class RetrieveTicketsID {
 				try {
 					issues = json.getJSONArray("issues");
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		         try {
 					total = json.getInt("total");
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		         
@@ -115,16 +111,13 @@ public class RetrieveTicketsID {
 						Logger logger = null;
 						logger.log((LogRecord) issues.getJSONObject(i%1000).get(fields));
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 		            try {
 						writeJsonFile(issues.getJSONObject(i%1000));
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 		          }  
@@ -134,13 +127,11 @@ public class RetrieveTicketsID {
 			      try {
 					mainNode.put("Data", new JSONArray(items));
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				  try {
 					Files.write(Paths.get("/home/mattia/Desktop/ingegneria_software_2/Falessi/Isw2Project/deliverable_1/data.json"), mainNode.toString().getBytes());
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
