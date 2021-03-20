@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,8 +14,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator; 
-import java.util.Map; 
+
 public class RetrieveTicketsID {
 
 	static Collection<JSONObject> items;
@@ -59,57 +57,49 @@ public class RetrieveTicketsID {
 	   }
 
 
-	   public static void writeJsonSimpleDemo(String filename, JSONObject oldSampleObject) throws Exception {
-		    JSONObject sampleObject = new JSONObject();
+	   public static void writeJsonFile(String filename, JSONObject oldSampleObject) throws Exception {
+		    
+		   JSONObject sampleObject = new JSONObject();
 		    sampleObject.put("fields", oldSampleObject.get("fields"));
 		    items.add(sampleObject);
 		    
-		    //Files.write(Paths.get(filename), sampleObject.toString().getBytes());
 		}
 	  
-	  	   public static void main(String[] args) throws Exception {
-	  		 items = new ArrayList<JSONObject>();
+	  	public static void main(String[] args) throws Exception {
+	  		   
+	  		items = new ArrayList<JSONObject>();
 	  		mainNode = new JSONObject();
-
-
-	  		  String projName ="DAFFODIL";
-		   Integer j = 0, i = 0, total = 1;
-		   String jsonString;
-	      //Get JSON API for closed bugs w/ AV in the project
-	      do {
-	         //Only gets a max of 1000 at a time, so must do this multiple times if bugs >1000
-	         j = i + 1000;
-	         String url = "https://issues.apache.org/jira/rest/api/2/search?jql=project=%22"
-	                + projName + "%22AND%22issueType%22=%22Bug%22AND(%22status%22=%22closed%22OR"
-	                + "%22status%22=%22resolved%22)AND%22resolution%22=%22fixed%22&fields=key,resolutiondate,versions,created&startAt="
-	                + i.toString() + "&maxResults=" + j.toString();
-	         
-	         JSONObject json = readJsonFromUrl(url);
-	         jsonString = json.toString();	         
-
-	         JSONArray issues = json.getJSONArray("issues");
-	         total = json.getInt("total");
-	         
-	         for (; i < total && i < j; i++) {
-	            //Iterate through each bug
-	            String key = issues.getJSONObject(i%1000).get("key").toString();
-	            
-	            System.out.println(issues.getJSONObject(i%1000).get("fields"));
-	            writeJsonSimpleDemo("/home/mattia/Desktop/example.json", issues.getJSONObject(i%1000));
-	            //String key = issues.getJSONObject(i%1000).get("key").toString();
-
-	            //System.out.println(key);
-	         }  
-	      } while (i < total);
+	  		String projName ="DAFFODIL";
+	  		Integer j = 0, i = 0, total = 1;
+	  		
+	  		//Get JSON API for closed bugs w/ AV in the project
+	  		do {
+		         //Only gets a max of 1000 at a time, so must do this multiple times if bugs >1000
+		         j = i + 1000;
+		         String url = "https://issues.apache.org/jira/rest/api/2/search?jql=project=%22"
+		                + projName + "%22AND%22issueType%22=%22Bug%22AND(%22status%22=%22closed%22OR"
+		                + "%22status%22=%22resolved%22)AND%22resolution%22=%22fixed%22&fields=key,resolutiondate,versions,created&startAt="
+		                + i.toString() + "&maxResults=" + j.toString();
+		         
+		         JSONObject json = readJsonFromUrl(url);
+	
+		         JSONArray issues = json.getJSONArray("issues");
+		         total = json.getInt("total");
+		         
+		         for (; i < total && i < j; i++) {
+		            //Iterate through each bug
+		            System.out.println(issues.getJSONObject(i%1000).get("fields"));
+		            writeJsonFile("/home/mattia/Desktop/example.json", issues.getJSONObject(i%1000));
+		          }  
 	      
-	         //System.out.println(jsonString);
+	  		}while (i < total);
+	      
+			      mainNode.put("Data", new JSONArray(items));
+				  Files.write(Paths.get("/home/mattia/Desktop/ingegneria_software_2/Falessi/Isw2Project/deliverable_1/data.json"), mainNode.toString().getBytes());
 
-	      mainNode.put("Data", new JSONArray(items));
-		  Files.write(Paths.get("/home/mattia/Desktop/example.json"), mainNode.toString().getBytes());
+		return;
 
-	      return;
-
-	  }
+	  	}
 }
 
 	 
