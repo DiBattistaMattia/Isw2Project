@@ -25,6 +25,8 @@ public class RetrieveTicketsID {
 	   static JSONObject mainNode;
 	   static String fields = "fields";
 
+	   private RetrieveTicketsID() {}
+	   
 	   private static String readAll(Reader rd) throws IOException {
 		      StringBuilder sb = new StringBuilder();
 		      int cp;
@@ -57,16 +59,20 @@ public class RetrieveTicketsID {
 	   }
 
 
-	   public static void writeJsonFile(JSONObject oldSampleObject) throws Exception {
+	   public static void writeJsonFile(JSONObject oldSampleObject) {
 		    
 		   JSONObject sampleObject = new JSONObject();
-		   sampleObject.put(fields, oldSampleObject.get(fields));
+		   try {
+				sampleObject.put(fields, oldSampleObject.get(fields));
+		   } catch (JSONException e) {
+				e.printStackTrace();
+		   }
 		   items.add(sampleObject);
 		    
 		}
 	  
 	  	@SuppressWarnings("null")
-		public static void main(){
+		public static void main(String[] args){
 	  		   
 	  		items = new ArrayList<>();
 	  		mainNode = new JSONObject();
@@ -74,17 +80,21 @@ public class RetrieveTicketsID {
 	  		Integer j = 0;
 	  		Integer i = 0;
 	  		Integer total = 1;
+	  		JSONObject json = null;
+	  		String url = null;
+	  		JSONArray issues = null;
+	  		Logger logger = null;
 	  		
 	  		//Get JSON API for closed bugs w/ AV in the project
 	  		do {
 		         //Only gets a max of 1000 at a time, so must do this multiple times if bugs >1000
 		         j = i + 1000;
-		         String url = "https://issues.apache.org/jira/rest/api/2/search?jql=project=%22"
+		         url = "https://issues.apache.org/jira/rest/api/2/search?jql=project=%22"
 		                + projName + "%22AND%22issueType%22=%22Bug%22AND(%22status%22=%22closed%22OR"
 		                + "%22status%22=%22resolved%22)AND%22resolution%22=%22fixed%22&fields=key,resolutiondate,versions,created&startAt="
 		                + i.toString() + "&maxResults=" + j.toString();
 		         
-		         JSONObject json = null;
+		        
 				try {
 					json = readJsonFromUrl(url);
 				} catch (IOException e) {
@@ -93,7 +103,6 @@ public class RetrieveTicketsID {
 					e.printStackTrace();
 				}
 	
-		         JSONArray issues = null;
 				try {
 					issues = json.getJSONArray("issues");
 				} catch (JSONException e) {
@@ -108,7 +117,7 @@ public class RetrieveTicketsID {
 		         for (; i < total && i < j; i++) {
 		            //Iterate through each bug
 		            try {
-						Logger logger = null;
+						
 						logger.log((LogRecord) issues.getJSONObject(i%1000).get(fields));
 					} catch (JSONException e) {
 						e.printStackTrace();

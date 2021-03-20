@@ -16,13 +16,13 @@ getClass(),java.lang.Object#getClass()Ljava/lang/Class;5
 notifyAll()java.lang.Object#notifyAll()V"
 wait()java.lang.Object#wait()V*
 
-hashCode()java.lang.Object#hashCode()Iø
-#retrieveticketsid.RetrieveTicketsIDjava.lang.Objectl
+hashCode()java.lang.Object#hashCode()Iô
+#retrieveticketsid.RetrieveTicketsIDjava.lang.Object5
+main()+retrieveticketsid.RetrieveTicketsID#main()Vl
 readAll(Ljava/io/Reader;)Oretrieveticketsid.RetrieveTicketsID#readAll(Ljava/io/Reader;)Ljava/lang/String;9
 <init>()-retrieveticketsid.RetrieveTicketsID#<init>()VÉ
 (readJsonArrayFromUrl(Ljava/lang/String;)Wretrieveticketsid.RetrieveTicketsID#readJsonArrayFromUrl(Ljava/lang/String;)LJSONArray;z
-#readJsonFromUrl(Ljava/lang/String;)Sretrieveticketsid.RetrieveTicketsID#readJsonFromUrl(Ljava/lang/String;)LJSONObject;[
-main([Ljava/lang/String;)>retrieveticketsid.RetrieveTicketsID#main([Ljava/lang/String;)V(
+#readJsonFromUrl(Ljava/lang/String;)Sretrieveticketsid.RetrieveTicketsID#readJsonFromUrl(Ljava/lang/String;)LJSONObject;(
 java.io.Serializablejava.lang.Object(
 java.lang.Comparablejava.lang.Object”
 java.lang.CharSequencejava.lang.ObjectE
