@@ -16,7 +16,6 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -25,7 +24,6 @@ public class RetrieveTicketsID {
 	   static Collection<JSONObject> items;
 	   static JSONObject mainNode;
 	   static String fields = "fields";
-	private static Logger logger;
 
 	   private RetrieveTicketsID() {}
 	   
