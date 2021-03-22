@@ -18,12 +18,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import java.util.logging.Level;
 
 public class RetrieveTicketsID {
 
 	   static Collection<JSONObject> items;
 	   static JSONObject mainNode;
 	   static String fields = "fields";
+	private static Logger logger;
 
 	   private RetrieveTicketsID() {}
 	   
@@ -71,17 +73,15 @@ public class RetrieveTicketsID {
 		    
 		}
 	  
-	   	public static void iterateOnBug(Integer i, Integer total, Integer j, JSONArray issues) {
+	   	public static int iterateOnBug(Integer i, Integer total, Integer j, JSONArray issues) {
 	   		
-	  		Logger logger = null;
+	   		Logger logger = Logger.getLogger(RetrieveTicketsID.class.getName());
 
 	   		for (; i < total && i < j; i++) {
-	            //Iterate through each bug
 	            try {
-					
-					logger.log((LogRecord) issues.getJSONObject(i%1000).get(fields));
-				} catch (JSONException e) {
-					e.printStackTrace();
+					logger.log(Level.OFF, issues.getJSONObject(i%1000).get(fields).toString());
+				} catch (JSONException e1) {
+					e1.printStackTrace();
 				}
 	            try {
 					writeJsonFile(issues.getJSONObject(i%1000));
@@ -91,6 +91,8 @@ public class RetrieveTicketsID {
 					e.printStackTrace();
 				}
 	          }
+	   		
+	   		return i;
 	   		
 	   	}
 	   	
@@ -135,7 +137,7 @@ public class RetrieveTicketsID {
 					e.printStackTrace();
 				}
 		          
-		         iterateOnBug(i, total, j, issues); 
+		         i = iterateOnBug(i, total, j, issues); 
 	      
 	  		}while (i < total);
 	      

@@ -3,5 +3,5 @@ projectKey=DiBattistaMattia_Isw2Project
 serverUrl=https://sonarcloud.io
 serverVersion=8.0.0.18399
 dashboardUrl=https://sonarcloud.io/dashboard?id=DiBattistaMattia_Isw2Project
-ceTaskId=AXhPCDoYZL5ctnaf0GiR
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AXhPCDoYZL5ctnaf0GiR
+ceTaskId=AXhOwmSZgrc6fF571NY6
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AXhOwmSZgrc6fF571NY6
