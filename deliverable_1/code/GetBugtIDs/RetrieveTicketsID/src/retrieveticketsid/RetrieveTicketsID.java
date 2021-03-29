@@ -145,7 +145,7 @@ public class RetrieveTicketsID {
 					e.printStackTrace();
 				}
 				  try {
-					Files.write(Paths.get("/home/mattia/Desktop/ingegneria_software_2/Falessi/Isw2Project/deliverable_1/data.json"), mainNode.toString().getBytes());
+					Files.write(Paths.get("data.json"), mainNode.toString().getBytes());
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
